@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+        <title>code-demo demo</title>
+
+        <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+        <script type="module">
+            // TODO: use my own demo element instead of Polymer's
+            // import '@polymer/iron-demo-helpers/demo-pages-shared-styles';
+            // import '@polymer/iron-demo-helpers/demo-snippet';
+        </script>
+
+        <script type="module" src="../code-demo.js"></script>
+
+        <style>
+            body {
+                font-family: 'Helvetica', sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="vertical-section-container centered">
+            <h1>Basic code-demo demo</h1>
+            <h2><code>code</code> attribute</h2>
+            <code-demo code="<code>hey<code>"></code-demo>
+            <h2><code>src</code> attribute</h2>
+            <code-demo src="./demo.html"></code-demo>
+            <h2><code>&lt;script&gt;</code> tag</h2>
+            <code-demo>
+                <script type="text/markdown">
+                    <p>This demo uses a <code>&lt;script&gt;</code> tag.</p>
+                </script>
+            </code-demo>
+        </div>
+    </body>
+</html>

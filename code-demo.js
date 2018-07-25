@@ -1,11 +1,13 @@
-import './node_modules/@polymer/polymer/polymer-element.js';
+import { LitElement, html } from '@polymer/lit-element/lit-element.js';
+import { unsafeHTML } from 'lit-html/lib/unsafe-html.js';
+import '@intcreator/markdown-element';
 
-export class CodeDemo extends PolymerElement {
+export class CodeDemo extends LitElement {
 
-    static get template() {
+    _render({ renderedCode, markdown }) {
         return html`
             <style>
-    
+
                 :host {
                     display: block;
                     position: relative;
@@ -79,14 +81,59 @@ export class CodeDemo extends PolymerElement {
                 }
 
             </style>
-            
-            <markdown-element markdown="[[markdown]]">
-                <div slot="markdown-html"></div>
-            </markdown-element>
-            <button id="copy-button" on-click="copyToClipboard">Copy</button>
-        `
+            ${ renderedCode }
+            <markdown-element markdown$=${ markdown }></markdown-element>
+            <!-- <button id="copy-button" on-click="copyToClipboard">Copy</button> -->
+        `;
     }
 
+    static get properties() {
+        return {
+            code: String,
+            renderedCode: String,
+            src: String,
+            scriptTag: Object,
+            markdown: String
+        };
+    }
 
+    set code(code) {
+        console.log(code);
+        this.renderedCode = this.renderCode(code);
+        this.markdown = `\`\`\`html\n${ code }\n\`\`\``.trim();
+    }
+
+    // fetch the markdown using the `src` attribute
+    // note: overrides `markdown` attribute
+    set src(src) {
+        this
+            .fetchCode(src)
+            .then(r => this.code = r);
+    }
+
+    // set the code from the script tag, trimming the whitespace
+    // note: overrides `src` and `code` attributes
+    set scriptTag(scriptTag) {
+        if(scriptTag) this.code = scriptTag.text.trim();
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        // look for a script tag
+        this.scriptTag = this.querySelector('script[type="text/markdown"]');
+    }
+
+    // fetch the markdown and set it locally
+    async fetchCode(src) {
+        return await fetch(src)
+            .then(async response => await response.text())
+            .catch(e => 'Failed to read code file.')
+    }
+
+    renderCode(code) {
+        return html`${unsafeHTML(code)}`;
+    }
 
 }
+
+customElements.define('code-demo', CodeDemo);

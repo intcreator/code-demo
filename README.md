@@ -1,6 +1,6 @@
 # &lt;code-demo&gt;
 
-A small but useful isolated code demo element.  Uses `&lt;iframe&gt;` to create an isolated space where JavaScript code can run without affecting other parts of the page.
+A small but useful isolated code demo element.  Uses `<iframe>` to create an isolated space where JavaScript code can run without affecting other parts of the page.
 
 ## Contributing
 
