@@ -1,6 +1,6 @@
 {
   "description": "A small but useful isolated code demo element",
-  "name": "@polymer/code-demo",
+  "name": "@intcreator/code-demo",
   "version": "0.1.0",
   "author": "Brandon der Blätter (https://intcreator.com)",
   "main": "code-demo.js",
